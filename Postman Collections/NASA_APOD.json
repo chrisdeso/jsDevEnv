@@ -1,0 +1,119 @@
+{
+  "info": {
+    "_postman_id": "664e2757-6269-7243-bbfa-527bf9206c41",
+    "name": "NASA APOD",
+    "description": "NASAs Astronomy Picture of the Day\n\n# Description\n## Heading\n### Nonsense",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "_postman_id": "cbd7dc9f-a579-8039-329c-e7f4aeaeecc7",
+      "name": "APOD Get HD ",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "var isSuccessful = responseCode.code === 200;",
+              "",
+              "if (isSuccessful) {",
+              "    ",
+              "    try {",
+              "        // Parse JSON response object to access needed information",
+              "        var result = JSON.parse(responseBody);",
+              "        var picTitle = result.title;",
+              "        var picExplanation = result.explanation;",
+              "        var picUrl = result.url;",
+              "        console.log(picTitle);",
+              "        console.log(picExplanation);",
+              "        console.log(picUrl);",
+              "    }",
+              "    ",
+              "    catch(e) {",
+              "        console.log(e);",
+              "        console.log(\"willy nilly\");",
+              "        console.log(\"ankit, this is the update\");",
+              "        //the book is on the table",
+              "    }",
+              "    ",
+              "    // Set environment variables to the most recent corresponding GET request",
+              "    postman.setEnvironmentVariable(\"Picture_Title\", picTitle);",
+              "    postman.setEnvironmentVariable(\"Picture_Explanation\", picExplanation);",
+              "    postman.setEnvironmentVariable(\"Picture_URL\", picUrl);",
+              "    ",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {},
+        "url": {
+          "raw": "{{base_url}}/planetary/apod?api_key={{api_key}}&hd=true",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "planetary",
+            "apod"
+          ],
+          "query": [
+            {
+              "key": "api_key",
+              "value": "{{api_key}}",
+              "equals": true
+            },
+            {
+              "key": "hd",
+              "value": "true",
+              "equals": true
+            }
+          ]
+        },
+        "description": "Astronomy Picture of the Day"
+      },
+      "response": []
+    },
+    {
+      "_postman_id": "56aea1bb-fad7-7cda-4384-7b9b9519d1fa",
+      "name": "POST to Slack",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"NASA APOD\",\n  \"icon_emoji\": \":space_invader:\",\n  \"text\": \"{{Picture_URL}}\",\n  \n  \"attachments\": [\n        {\n            \"fallback\": \"{{Picture_Title}}\",\n            \"title\": \"{{Picture_Title}}\",\n            \"text\": \"{{Picture_Explanation}}\",\n            \"color\": \"#4283f4\"\n        }\n    ]\n}\n\n"
+        },
+        "url": "https://hooks.slack.com/services/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"
+      },
+      "response": []
+    },
+    {
+      "_postman_id": "6c64484f-0bfa-2565-5068-12659edc4c85",
+      "name": "POST to Slack copy",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"NASA APOD\",\n  \"icon_emoji\": \":space_invader:\",\n  \"text\": \"{{Picture_URL}}\",\n  \n  \"attachments\": [\n        {\n            \"fallback\": \"{{Picture_Title}}\",\n            \"title\": \"{{Picture_Title}}\",\n            \"text\": \"{{Picture_Explanation}}\",\n            \"color\": \"#4283f4\"\n        }\n    ]\n}\n\n"
+        },
+        "url": "https://hooks.slack.com/services/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"
+      },
+      "response": []
+    }
+  ]
+}
